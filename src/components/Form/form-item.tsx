@@ -25,26 +25,22 @@ import {
 import { FormItemContext } from './form-item-context';
 
 import classname from 'classnames';
-import { getErrorAndWarnings, isFieldRequired } from './utils';
+import { getErrors, isFieldRequired } from './utils';
 
 interface IFromItemInnerState {
     validateStatus: ValidateStatus;
     errors?: ReactNode[];
-    _touched: boolean;
 }
 
 class FormItemInner extends PureComponent<
     IFormItemInnerProps,
     IFromItemInnerState
 > {
-    // eslint-disable-next-line react/static-property-placement
     context!: React.ContextType<typeof FormItemContext>;
 
     destroyField: () => void;
 
-    private _errors: ReactNode[] = [];
-
-    private _touched = false;
+    private _errors: string[] = [];
 
     constructor(props: IFormItemInnerProps, context: IFormItemContext) {
         super(props);
@@ -64,22 +60,12 @@ class FormItemInner extends PureComponent<
         this.destroyField();
     }
 
-    onValueChange(preStore: FieldItem, curStore: FieldItem) {
-        this._touched = true;
-        const { shouldUpdate } = this.props;
-        if (typeof shouldUpdate === 'function') {
-            shouldUpdate({ preStore, curStore }) && this.forceUpdate();
-            return;
-        }
+    onValueChange() {
         this.forceUpdate();
     }
 
     getFieldError() {
         return this._errors;
-    }
-
-    isFieldTouched() {
-        return this._touched;
     }
 
     validateField(): Promise<IFieldError> {
@@ -97,17 +83,11 @@ class FormItemInner extends PureComponent<
                 fieldValidator.validate(
                     { [field]: value },
                     (errorsMap: Record<string, ValidatorError[]>) => {
-                        const { errors, warnings } = getErrorAndWarnings(
-                            errorsMap?.[field] || [],
-                        );
+                        const { errors } = getErrors(errorsMap?.[field] || []);
                         this._errors = errors;
-                        onValidateStatusChange({
-                            errors: this._errors,
-                            warnings,
-                        });
+                        onValidateStatusChange(this._errors);
                         return resolve({
                             errors: this._errors,
-                            warnings,
                             value,
                             field,
                             dom: fieldDom,
@@ -118,7 +98,6 @@ class FormItemInner extends PureComponent<
         }
         return Promise.resolve({
             errors: [],
-            warnings: [],
             value,
             field,
             dom: null,
@@ -148,14 +127,6 @@ class FormItemInner extends PureComponent<
         }
     };
 
-    innerClearFunction(...args: any) {
-        const { children } = this.props;
-        this.setFieldData('');
-        if (children.props?.onClear) {
-            children.props?.onClear(...args);
-        }
-    }
-
     renderChildren() {
         const {
             children,
@@ -176,7 +147,6 @@ class FormItemInner extends PureComponent<
                 props = {
                     value: getFieldValue(field) || '',
                     onInput: this.innerTriggerFunction,
-                    onClear: this.innerClearFunction,
                     disabled: this.props.disabled,
                 };
                 break;
@@ -223,16 +193,10 @@ export default forwardRef((props: FormItemProps, ref: Ref<FormItemRef>) => {
 
     const { disabled: propsDisabled } = useContext(FormItemContext);
     const [errors, setErrors] = useState<ReactNode | null>(null);
-    const [warnings, setWarnings] = useState<ReactNode[]>([]);
     const formItemRef = useRef<HTMLDivElement | null>(null);
 
-    const onValidateStatusChange = (validateResult: {
-        errors: ReactNode[];
-        warnings: ReactNode[];
-    }) => {
-        const { errors: _errors, warnings: _warnings } = validateResult;
-        setErrors(_errors.length ? _errors[0] : null);
-        setWarnings(_warnings);
+    const onValidateStatusChange = (errors: string[]) => {
+        setErrors(errors.length ? errors[0] : null);
     };
 
     const getFormItemRef = () => {
@@ -280,15 +244,6 @@ export default forwardRef((props: FormItemProps, ref: Ref<FormItemRef>) => {
                 </div>
                 {errors && (
                     <div className="m-primary-error-color">{errors}</div>
-                )}
-                {(warnings || []).map((node, key) =>
-                    typeof node === 'string' ? (
-                        <div className="m-primary-error-color" key={key}>
-                            {node}
-                        </div>
-                    ) : (
-                        node
-                    ),
                 )}
             </div>
             {extra}

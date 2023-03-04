@@ -6,8 +6,5 @@ export enum FormInternalComponentType {
     Input = 'Input',
     Textarea = 'Textarea',
     Checkbox = 'Checkbox',
-    DatePicker = 'DatePicker',
-    Picker = 'Picker',
     Radio = 'Radio',
-    RadioGroup = 'RadioGroup',
 }

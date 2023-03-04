@@ -1,9 +1,9 @@
 export declare type IFieldValue = any;
 export declare type IValidateLevel = 'error' | 'warning';
+import { ValidatorType } from '@/enums/validatorEnum';
 
 export interface IBaseRules {
     validateTrigger?: string | string[];
-    validateLevel?: IValidateLevel;
     required?: boolean;
     length?: number;
     message?: string;
@@ -51,12 +51,14 @@ export declare type ValidatorTypeMap = {
 };
 export declare type ITypeRules<T extends ValidatorType> =
     ValidatorTypeMap[T] & {
-        validator: any;
+        validator?: any;
         type: T;
     };
+
 export declare type IRules = {
     [P in ValidatorType]: ITypeRules<P>;
 }[ValidatorType];
+
 export declare type InnerRules = IRules & {
     field: string;
 };
@@ -64,7 +66,6 @@ export interface ValidatorError {
     value: IFieldValue;
     message?: string[];
     errorTypes: string[];
-    validateLevel?: IValidateLevel;
 }
 
 export interface IValidateOption {

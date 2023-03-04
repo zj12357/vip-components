@@ -11,6 +11,8 @@ import { FormItemContext } from './form-item-context';
 import useForm from './useForm';
 import Item from './form-item';
 
+export { default as useForm } from './useForm';
+
 const Form = forwardRef((props: FormProps, ref: Ref<FormRef>) => {
     const {
         className = '',

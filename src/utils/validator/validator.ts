@@ -73,7 +73,6 @@ export class Validator {
                     const curError = validatorGroup.string.getErrors();
                     resolve({
                         ...curError,
-                        validateLevel: rule?.validateLevel || 'error',
                     });
                 }),
             );
@@ -100,7 +99,6 @@ export class Validator {
                             const curError = typeValidator.getErrors();
                             resolve({
                                 ...curError,
-                                validateLevel: rule?.validateLevel || 'error',
                             });
                         }),
                     );

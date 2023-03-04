@@ -9,29 +9,42 @@ import {
 const defaultFunc: any = () => {};
 
 export const defaultFormDataMethods = {
-    getFieldValue: (name: any) => name,
-    getFieldsValue: (_names: any) => {
+    // 获取某个字段的值
+    getFieldValue: (name: string) => name,
+
+    // 获取多个字段的值
+    getFieldsValue: (_names?: string[]) => {
         return {};
     },
-    getFieldError: (_name: any) => [],
-    setFieldValue: (_name: any, _value: any) => {
+    // 获取某个字段的错误信息
+    getFieldError: (_name: string) => [],
+
+    // 给某个字段设置值
+    setFieldValue: (_name: string, _value: any) => {
         return true;
     },
+    // 给多个字段设置值
     setFieldsValue: (_values: any) => {
         return true;
     },
-    registerField: (_name: any, _self: any) => {
+
+    // 注册字段
+    registerField: (_name: string, _self: ReactNode) => {
         return () => {};
     },
+    // 重置表单
     resetFields: defaultFunc,
+    // 校验表单
     validateFields: defaultFunc,
+    // 提交表单
     submit: defaultFunc,
 
+    // 获取内部hooks
     getInternalHooks: () => {
         return {
             registerField: defaultFunc,
             setInitialValues: defaultFunc,
-            setCallbacks: defaultFunc,
+            setCallbacks: defaultFunc, //提交成功，提交失败，表单值变化3个事件
         };
     },
 };
@@ -71,11 +84,12 @@ class FormData {
         return true;
     };
 
+    //更新表单值
     notifyField = (values: FieldItem): void => {
         Object.keys(values).map((fieldName: string) => {
             const fieldObj = this._fieldsList?.[fieldName] || null;
             if (fieldObj) {
-                fieldObj.onValueChange(values[fieldName]);
+                fieldObj.onValueChange();
             }
         });
     };
@@ -110,17 +124,10 @@ class FormData {
         }, {});
     };
 
-    isFieldTouched = (name: string): boolean => {
-        const field = this._fieldsList?.[name] || null;
-        if (field) {
-            return field.isFieldTouched();
-        }
-        return false;
-    };
-
     registerField = (name: string, self: ReactNode) => {
         this._fieldsList[name] = self;
         const { initialValue } = (self as any).props;
+
         if (initialValue !== undefined && name) {
             this._initialValues = {
                 ...this._initialValues,
@@ -132,6 +139,7 @@ class FormData {
             });
         }
 
+        //组件卸载时，删除字段
         return () => {
             if (name in this._fieldsList) {
                 delete this._fieldsList[name];
@@ -145,10 +153,12 @@ class FormData {
         this.setFieldsValue(initVal);
     };
 
+    //重置表单，使用initialValue的数据
     resetFields = () => {
         this.setFieldsValue(this._initialValues);
     };
 
+    //校验表单
     validateFields = () => {
         const promiseList: Promise<IFieldError>[] = [];
         Object.values(this._fieldsList).forEach((entity: any) => {
@@ -200,7 +210,6 @@ class FormData {
             getFieldValue: this.getFieldValue,
             getFieldError: this.getFieldError,
             getFieldsError: this.getFieldsError,
-            isFieldTouched: this.isFieldTouched,
             registerField: this.registerField,
             resetFields: this.resetFields,
             submit: this.submit,

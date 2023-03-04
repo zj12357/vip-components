@@ -72,7 +72,7 @@ export function useInputLogic(
                 inputRef.current && inputRef.current.focus();
             }, 200);
         }
-    }, []);
+    }, [autoFocus, inputRef]);
 
     useEffect(() => {
         // 处理受控模式下的showClear
@@ -80,7 +80,7 @@ export function useInputLogic(
         if (clearShowType === 'value' && value !== void 0) {
             toggleClear(Boolean(value));
         }
-    }, [value]);
+    }, [clearShowType, value]);
 
     function changeValue(nowValue: string, callback = () => {}) {
         if (nowValue && validator) {

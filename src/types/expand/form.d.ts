@@ -58,7 +58,6 @@ export interface FormProps {
 export interface IFieldError {
     value?: FieldValue;
     errors?: ReactNode[];
-    warnings?: ReactNode[];
     field?: string;
     dom?: HTMLDivElement | null;
 }
@@ -89,8 +88,6 @@ export interface IFormDataMethods {
      */
     registerField: (name: string, self: ReactNode) => () => void;
 }
-
-
 
 export interface Callbacks {
     /**
@@ -328,7 +325,7 @@ export interface IFormItemInnerProps {
      * 校验状态变化回调
      * @en The callback when validating status changes
      */
-    onValidateStatusChange: (data: { errors: any; warnings: any }) => void;
+    onValidateStatusChange: (errors: string[]) => void;
     /**
      * 获取内部表单项的dom
      * @en The dom of inner form item
