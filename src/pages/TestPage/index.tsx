@@ -1,6 +1,6 @@
 import React, { FC, useEffect } from 'react';
-import Form, { useForm } from '@/components/Form';
-import Input from '@/components/Input';
+import { Input, Form } from '@/components/vip-ui';
+import { useForm } from '@/components/vip-ui/Form';
 
 type TestPageProps = {};
 

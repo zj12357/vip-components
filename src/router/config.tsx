@@ -2,7 +2,7 @@ import React, { FC, Suspense } from 'react';
 import { RouteProps } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
 import PrivateRoute from './privateRoute';
-import Loading from '@/components/Loading';
+import Loading from '@/components/vip-ui/Loading';
 import { Helmet, HelmetProvider } from 'react-helmet-async';
 import { localeAtom } from '@/store/common/atoms';
 import { API_URL } from '@/common/constants';
