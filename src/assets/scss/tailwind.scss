@@ -1,0 +1,13 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@tailwind variants;
+@tailwind screens;
+
+.image-object-fit {
+    @apply w-full h-full object-cover;
+}
+
+.text-ellipsis {
+    @apply overflow-hidden overflow-ellipsis whitespace-nowrap;
+}

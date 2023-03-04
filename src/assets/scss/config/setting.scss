@@ -1,0 +1,86 @@
+@mixin bgurl($url) {
+    background-image: url($url);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+}
+
+@mixin pAbsolute {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+}
+
+@mixin textEllipsis {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+@mixin imageCover {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+//主题背景色
+$primary-color: #1da57a;
+
+//card背景色
+$primary-card-color: #eee;
+
+//主题字体颜色
+$primary-font-color: #b3893d;
+
+//错误色
+$primary-error-color: #f5222d;
+
+// 链接色
+$primary-link-color: #1890ff;
+
+// 成功色
+$primary-success-color: #52c41a;
+
+//a标签激活字体颜色
+$primary-a-active-font-color: #c0c0c0;
+
+//主题色 class
+.m-primary-font-color {
+    color: $primary-font-color;
+}
+
+.m-primary-error-color {
+    color: $primary-error-color;
+}
+
+.m-primary-success-color {
+    color: $primary-success-color;
+}
+
+.m-primary-link-color {
+    color: $primary-link-color;
+}
+
+.m-primary-background {
+    background: $primary-color;
+}
+
+.m-primary-card-background {
+    background: $primary-card-color;
+}
+
+.m-primary-a-active-font-color {
+    color: $primary-a-active-font-color;
+}
+
+//鼠标手势
+.pointer {
+    cursor: pointer;
+}
+
+.not-allowed {
+    cursor: not-allowed;
+    opacity: 0.5;
+}
