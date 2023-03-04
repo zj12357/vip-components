@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import useLatest from '../useLatest';
-import { isFunction } from '@/utils/tools';
+import { isFunction } from '@/utils/is';
 
 //组件卸载时要执行的回调
 const useUnmount = (fn: () => void) => {

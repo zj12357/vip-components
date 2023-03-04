@@ -200,11 +200,6 @@ export interface IFormItemContext {
      * @en Whether form is disabled
      */
     disabled?: boolean;
-    /**
-     * 表单校验项定义
-     * @en Validating message of form
-     */
-    validateMessages?: Record<string, unknown>;
 }
 
 export type IShouldUpdateFunc = (data: {

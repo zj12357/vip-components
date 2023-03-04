@@ -5,6 +5,7 @@ export const isFieldRequired = (rules: IRules[] = []) => {
     return (rules || []).some((rule) => rule?.required);
 };
 
+//返回错误信息
 export const getErrors = (result: ValidatorError[]) => {
     let errors: string[] = [];
     result.map(({ message = [] }) => {

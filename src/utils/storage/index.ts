@@ -1,6 +1,10 @@
-import { isObject } from '@/utils/tools';
+import { isObject } from '@/utils/is';
 import { isDevMode } from '@/config/env';
-import type { StorageConfig, StorageType, StorageValue } from './types';
+import type {
+    StorageConfig,
+    StorageType,
+    StorageValue,
+} from '@/types/expand/storage';
 import { CRYPTO_STORAGE_KEY } from '@/common/constants';
 import { cryptoDecrypt, cryptoEncrypt } from '@/utils/tools';
 

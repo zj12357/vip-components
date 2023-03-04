@@ -1,28 +1,17 @@
 import React, { FC, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { useQuery, useMutation } from '@tanstack/react-query';
 import Form, { useForm } from '@/components/Form';
 import Input from '@/components/Input';
-import { getHallList } from '@/api/home';
-import { ValidatorType } from '@/enums/validatorEnum';
 
 type TestPageProps = {};
 
 const TestPage: FC<TestPageProps> = (props) => {
-    const { status, data, error, mutate } = useMutation(
-        (params: any) => getHallList(params),
-        {
-            onSuccess: () => {
-                console.log('成功');
-            },
-        },
-    );
     const [form] = useForm();
 
     const onSubmit = (values: any, result: any) => {
         console.log('----submit Successfully', values, result);
         console.log(form.setFieldValue('name', 8888), form);
     };
+
     return (
         <div>
             <div>I am TestPage</div>
@@ -35,15 +24,13 @@ const TestPage: FC<TestPageProps> = (props) => {
                 }}
             >
                 <Form.Item
-                    field="age"
-                    label="Age"
+                    field="name"
+                    label="姓名"
                     rules={[
                         {
-                            type: ValidatorType.Number,
                             required: true,
-                            message: '请输入年龄',
+                            message: '请输入姓名',
                         },
-                        { type: ValidatorType.Number, min: 12 },
                     ]}
                 >
                     <Input
@@ -53,9 +40,29 @@ const TestPage: FC<TestPageProps> = (props) => {
                     />
                 </Form.Item>
                 <Form.Item
-                    field="name"
-                    label="Name"
-                    rules={[{ type: ValidatorType.Number, min: 12 }]}
+                    field="age"
+                    label="年龄"
+                    rules={[
+                        {
+                            required: true,
+                            message: '请输入年龄',
+                        },
+                        {
+                            pattern: /^\d+$/,
+                            message: '请输入数字',
+                        },
+                        {
+                            validator: (val, callback) => {
+                                if (val.length > 5) {
+                                    callback(
+                                        'The maximum number of characters is 5',
+                                    );
+                                } else {
+                                    callback();
+                                }
+                            },
+                        },
+                    ]}
                 >
                     <Input
                         placeholder="Please input username"
@@ -63,12 +70,11 @@ const TestPage: FC<TestPageProps> = (props) => {
                         border="none"
                     />
                 </Form.Item>
+
                 <div>
-                    <button type="submit">Submit</button>
+                    <button type="submit">提交</button>
                 </div>
             </Form>
-
-            <button onClick={() => mutate({})}>useMutation</button>
         </div>
     );
 };

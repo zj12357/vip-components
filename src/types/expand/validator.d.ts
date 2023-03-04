@@ -1,4 +1,3 @@
-import { Promise } from 'es6-promise';
 import {
     ArrayValidator,
     CustomValidator,
@@ -11,7 +10,6 @@ export declare class Validator {
     rules: Record<string, IRules[]>;
     options: {
         first: boolean;
-        validateMessages?: Partial<IValidateMsgTemplate>;
     };
     validatorGroup: {
         number: NumberValidator;
@@ -24,7 +22,6 @@ export declare class Validator {
         rules: Record<string, IRules[]>,
         options: {
             first?: boolean;
-            validateMessages?: Partial<IValidateMsgTemplate>;
         },
     );
     createValidatorGroup(

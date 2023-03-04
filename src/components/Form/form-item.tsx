@@ -10,7 +10,7 @@ import React, {
 } from 'react';
 import { ValidatorError } from '@/types/expand/rules';
 import { Validator } from '@/utils/validator';
-import { ValidatorType, ValidateStatus } from '@/enums/validatorEnum';
+import { ValidateStatus } from '@/enums/validatorEnum';
 import { FormInternalComponentType } from '@/enums/formEnum';
 import {
     IFieldError,
@@ -69,16 +69,12 @@ class FormItemInner extends PureComponent<
     }
 
     validateField(): Promise<IFieldError> {
-        const { validateMessages } = this.context;
         const { getFieldValue } = this.context.form;
         const { field, rules, onValidateStatusChange } = this.props;
         const value = getFieldValue(field);
         if (rules?.length && field) {
             const fieldDom = this.props.getFormItemRef();
-            const fieldValidator = new Validator(
-                { [field]: rules },
-                { validateMessages },
-            );
+            const fieldValidator = new Validator({ [field]: rules });
             return new Promise((resolve) => {
                 fieldValidator.validate(
                     { [field]: value },
@@ -207,7 +203,7 @@ export default forwardRef((props: FormItemProps, ref: Ref<FormItemRef>) => {
 
     //字段校验规则
     const fieldRules = rest?.required
-        ? [{ type: ValidatorType.String, required: true }, ...(rules || [])]
+        ? [{ required: true }, ...(rules || [])]
         : rules;
 
     //是否必填

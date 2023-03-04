@@ -1,110 +1,69 @@
-import { isArray } from './is';
-import {
-    ArrayValidator,
-    BaseValidator,
-    CustomValidator,
-    NumberValidator,
-    ObjectValidator,
-    StringValidator,
-} from './rules';
-import {
-    IFieldValue,
-    IRules,
-    ITypeRules,
-    ValidatorError,
-} from '@/types/expand/rules';
-import { ValidatorType } from '@/enums/validatorEnum';
+import { isArray } from '../is';
+import { CustomValidator, BaseValidator } from './rules';
+import { IFieldValue, IRules, ValidatorError } from '@/types/expand/rules';
 
 export class Validator {
     rules: Record<string, IRules[]>;
 
-    options: {
-        first: boolean;
-        validateMessages?: Partial<Record<string, any>>;
-    };
-
-    validatorGroup: {
-        number: NumberValidator;
-        array: ArrayValidator;
-        string: StringValidator;
-        object: ObjectValidator;
-        custom: CustomValidator;
-    } = {} as any;
-    constructor(
-        rules: Record<string, IRules[]>,
-        options: {
-            first?: boolean;
-            validateMessages?: Partial<Record<string, any>>;
-        },
-    ) {
+    validatorGroup: {} = {} as any;
+    constructor(rules: Record<string, IRules[]>) {
         this.rules = rules;
-        this.options = { first: true, ...(options || {}) };
     }
 
-    createValidatorGroup(value: any, rule: IRules, field: string) {
-        const curOption = {
-            field,
-            validateMessage: this.options?.validateMessages,
-        };
+    createValidatorGroup(value: any, rule: IRules) {
         return {
-            number: new NumberValidator(value, rule, curOption),
-            array: new ArrayValidator(value, rule, curOption),
-            string: new StringValidator(value, rule, curOption),
-            object: new ObjectValidator(value, rule, curOption),
-            custom: new CustomValidator(value, rule, curOption),
+            main: new BaseValidator(value, rule),
+            custom: new CustomValidator(value, rule),
         };
     }
 
     // 一条rule执行
-    getSingleValidateGroup(value: IFieldValue, rule: any, field: string) {
-        const vType = rule?.type || 'string';
+    getSingleValidateGroup(value: IFieldValue, rule: IRules, field: string) {
         const validPromises: Promise<any>[] = [];
-        const validatorGroup: any = this.createValidatorGroup(
-            value,
-            rule,
-            field,
-        );
-        const typeValidator: any =
-            vType in validatorGroup ? validatorGroup[vType] : null;
+        const validatorGroup: any = this.createValidatorGroup(value, rule);
+
         if (rule.required) {
             validPromises.push(
                 new Promise((resolve) => {
-                    validatorGroup.string.isRequired();
-                    const curError = validatorGroup.string.getErrors();
+                    validatorGroup.main.isRequired();
+                    const curError = validatorGroup.main.getErrors();
                     resolve({
                         ...curError,
                     });
                 }),
             );
         }
-        if (typeValidator) {
-            Object.keys(rule).map((key) => {
-                if (key === 'validator') {
-                    const resPromise = (
-                        rule as ITypeRules<ValidatorType.Custom>
-                    ).validator
-                        ? validatorGroup.custom.validator(
-                              (rule as ITypeRules<ValidatorType.Custom>)
-                                  .validator || null,
-                          )
-                        : null;
-                    resPromise && validPromises.push(resPromise);
-                    return;
-                }
-                if (typeValidator.validateRules.includes(key)) {
-                    validPromises.push(
-                        new Promise((resolve) => {
-                            typeValidator.validateRules.includes(key) &&
-                                typeValidator[key](rule[key]);
-                            const curError = typeValidator.getErrors();
-                            resolve({
-                                ...curError,
-                            });
-                        }),
-                    );
-                }
-            });
+        if (rule.pattern) {
+            validPromises.push(
+                new Promise((resolve) => {
+                    validatorGroup.main.isPattern();
+                    const curError = validatorGroup.main.getErrors();
+                    resolve({
+                        ...curError,
+                    });
+                }),
+            );
         }
+
+        Object.keys(rule).map((key) => {
+            if (key === 'validator') {
+                const resPromise = rule.validator
+                    ? validatorGroup.custom.validator(rule.validator || null)
+                    : null;
+                resPromise && validPromises.push(resPromise);
+                return;
+            }
+
+            validPromises.push(
+                new Promise((resolve) => {
+                    const curError = validatorGroup.main.getErrors();
+                    resolve({
+                        ...curError,
+                    });
+                }),
+            );
+        });
+
         return validPromises;
     }
 
@@ -120,10 +79,7 @@ export class Validator {
                     return resolve({});
                 };
                 promise.then((errors: ValidatorError) => {
-                    if (
-                        this.options.first &&
-                        (errors.message || [])?.length > 0
-                    ) {
+                    if ((errors.message || [])?.length > 0) {
                         return resolve(errors);
                     }
                     next();
@@ -133,12 +89,14 @@ export class Validator {
         });
     }
 
+    // 一条rule执行
     validate(value: Record<string, any>, callback: (err: any) => void) {
         const promiseGroup: Promise<any>[] = [];
         const keys: string[] = [];
         if (this.rules) {
             Object.keys(this.rules).forEach((key) => {
                 let spPromiseGroup: Promise<any>[] = [];
+
                 if (isArray(this.rules[key])) {
                     for (let i = 0; i < this.rules[key].length; i++) {
                         const rule = this.rules[key][i];

@@ -65,7 +65,6 @@ const Form = forwardRef((props: FormProps, ref: Ref<FormRef>) => {
             <FormItemContext.Provider
                 value={{
                     ...contextValue,
-                    validateMessages: {},
                 }}
             >
                 {children}

@@ -1,39 +1,9 @@
 import * as cryptoJS from 'crypto-js';
 /**
- * @description: 判断数据类型 ;
+ * @description: 获取数据类型 ;
  * @param {*}
  * @return {*}
  */
-
-export const isObject = (value: unknown): value is Record<any, any> =>
-    value !== null &&
-    Object.prototype.toString.call(value) === '[object Object]';
-
-export const isFunction = (value: unknown): value is Function =>
-    typeof value === 'function';
-
-export const isString = (value: unknown): value is string =>
-    typeof value === 'string';
-
-export const isBoolean = (value: unknown): value is boolean =>
-    typeof value === 'boolean';
-
-export const isNumber = (value: unknown): value is number =>
-    typeof value === 'number';
-
-export const isUndef = (value: unknown): value is undefined =>
-    typeof value === 'undefined';
-
-export const isArray = (value: unknown): value is Array<any> =>
-    value !== null &&
-    Object.prototype.toString.call(value) === '[object Array]';
-
-export function isDate(val: unknown): val is Date {
-    return (
-        Object.prototype.toString.call(val) === '[object Date]' &&
-        !isNaN((val as Date).getTime())
-    );
-}
 
 export const getType = (value: any) => {
     const match = Object.prototype.toString.call(value).match(/ (\w+)]/);
