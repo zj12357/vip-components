@@ -20,8 +20,8 @@ const TestPage: FC<TestPageProps> = (props) => {
                 form={form}
                 onSubmit={onSubmit}
                 initialValues={{
-                    name: '123',
-                    age: 12,
+                    name: 'Tom',
+                    age: 44,
                 }}
             >
                 <Form.Item
@@ -35,7 +35,7 @@ const TestPage: FC<TestPageProps> = (props) => {
                     ]}
                 >
                     <Input
-                        placeholder="Please input username"
+                        placeholder="请输入姓名"
                         clearable
                         border="none"
                         ref={childRef}
@@ -55,10 +55,8 @@ const TestPage: FC<TestPageProps> = (props) => {
                         },
                         {
                             validator: (val, callback) => {
-                                if (val.length > 5) {
-                                    callback(
-                                        'The maximum number of characters is 5',
-                                    );
+                                if (val.length > 3) {
+                                    callback('输出的长度不能超过3位');
                                 } else {
                                     callback();
                                 }
@@ -66,11 +64,7 @@ const TestPage: FC<TestPageProps> = (props) => {
                         },
                     ]}
                 >
-                    <Input
-                        placeholder="Please input username"
-                        clearable
-                        border="none"
-                    />
+                    <Input placeholder="请输入年龄" clearable border="none" />
                 </Form.Item>
 
                 <div>
@@ -78,8 +72,10 @@ const TestPage: FC<TestPageProps> = (props) => {
                 </div>
             </Form>
 
-            <Loading></Loading>
-            <Empty description="暂无数据"></Empty>
+            <div className="mt-[20px]">
+                <Loading></Loading>
+                <Empty description="暂无数据"></Empty>
+            </div>
         </div>
     );
 };
