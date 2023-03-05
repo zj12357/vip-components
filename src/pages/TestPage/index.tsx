@@ -1,5 +1,5 @@
 import React, { FC, useRef } from 'react';
-import { Input, Form, Loading } from '@/components/vip-ui';
+import { Input, Form, Loading, Empty } from '@/components/vip-ui';
 import { useForm } from '@/components/vip-ui/Form';
 
 type TestPageProps = {};
@@ -79,6 +79,7 @@ const TestPage: FC<TestPageProps> = (props) => {
             </Form>
 
             <Loading></Loading>
+            <Empty description="暂无数据"></Empty>
         </div>
     );
 };

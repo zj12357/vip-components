@@ -20,3 +20,10 @@ export interface LoadingProps {
      */
     stroke?: number;
 }
+
+export interface LoadingRef {
+    /**
+     * 最外层元素 DOM
+     */
+    dom: HTMLDivElement | null;
+}
