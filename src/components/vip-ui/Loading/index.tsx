@@ -1,46 +1,70 @@
-import React, { FC, useRef, forwardRef, useImperativeHandle, Ref } from 'react';
+import React, { useRef, forwardRef, useImperativeHandle, Ref } from 'react';
 import { LoadingProps, LoadingRef } from '@/types/expand/loading';
 import classNames from 'classnames';
 import './index.scoped.scss';
 
 const Loading = forwardRef((props: LoadingProps, ref: Ref<LoadingRef>) => {
     const domRef = useRef<HTMLDivElement | null>(null);
-    const { stroke = 2, color, duration = 1500, style, className } = props;
-    const statusList = [1, 0.1, 0.2286, 0.3572, 0.4858, 0.6144, 0.743, 0.8716];
-    const len = statusList.length;
+    const {
+        stroke = 2,
+        color,
+        duration = 1500,
+        style,
+        className,
+        radius = 12,
+    } = props;
+
+    const circlePos = 0.5 * stroke + radius;
+    const circleSize = radius * 2 + stroke;
+    const halfCircle = Math.PI * radius;
 
     useImperativeHandle(ref, () => ({
         dom: domRef.current,
     }));
 
+    const renderArc = () => {
+        return (
+            <svg viewBox={`0 0 ${circleSize} ${circleSize}`}>
+                <circle
+                    className="arc-bg"
+                    cx={circlePos}
+                    cy={circlePos}
+                    r={radius}
+                    strokeWidth={stroke}
+                    fill="none"
+                />
+                <circle
+                    className="arc-line"
+                    cx={circlePos}
+                    cy={circlePos}
+                    r={radius}
+                    style={{ stroke: color }}
+                    strokeWidth={stroke}
+                    strokeDashoffset={halfCircle * 0.5}
+                    strokeDasharray={`${halfCircle * 0.5} ${halfCircle * 1.5}`}
+                    fill="none"
+                    {...{ strokeLinecap: 'round' }}
+                />
+            </svg>
+        );
+    };
+
+    const getLoadingStyle = (): React.CSSProperties => {
+        return {
+            width: circleSize,
+            height: circleSize,
+            animationDuration: `${duration}ms`,
+            ...(style || {}),
+        };
+    };
+
     return (
         <div
-            className={classNames(className, 'spin')}
-            style={{
-                animationDuration: `${duration}ms`,
-                ...(style || {}),
-            }}
+            className={classNames(className, 'arc')}
+            style={getLoadingStyle()}
             ref={domRef}
         >
-            {statusList.map((opacity, index) => (
-                <span
-                    key={index}
-                    className="spin-cell"
-                    style={{
-                        opacity,
-                        transform: `rotate(${index / len}turn)`,
-                        width: stroke,
-                    }}
-                >
-                    <span
-                        className="spin-cell-inner m-primary-background"
-                        style={{
-                            backgroundColor: color,
-                            ...{ borderRadius: stroke },
-                        }}
-                    />
-                </span>
-            ))}
+            {renderArc()}
         </div>
     );
 });

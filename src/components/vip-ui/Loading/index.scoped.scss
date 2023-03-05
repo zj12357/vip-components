@@ -1,33 +1,17 @@
-.spin {
-    position: relative;
-    width: 29px;
-    height: 29px;
-    animation: Spin 1s infinite linear;
+.arc {
+    overflow: hidden;
+    animation: changDeg 1s infinite linear;
 
-    .spin-cell {
-        position: absolute;
-        top: 1px;
-        left: 13px;
-        display: block;
-        height: 13px;
-        padding-bottom: 5px;
-        overflow: hidden;
-        transform-origin: 50% bottom;
+    &-bg {
+        stroke: #e5e6eb;
+    }
 
-        &-inner {
-            position: absolute;
-            top: 0;
-            left: 0;
-            display: block;
-            width: 200%;
-            height: 15px;
-            transform: scale(0.5);
-            transform-origin: top left;
-        }
+    &-line {
+        stroke: $primary-success-color;
     }
 }
 
-@keyframes Spin {
+@keyframes changDeg {
     0% {
         transform: rotate(0deg);
     }
