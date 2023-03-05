@@ -1,0 +1,38 @@
+.spin {
+    position: relative;
+    width: 29px;
+    height: 29px;
+    animation: Spin 1s infinite linear;
+
+    .spin-cell {
+        position: absolute;
+        top: 1px;
+        left: 13px;
+        display: block;
+        height: 13px;
+        padding-bottom: 5px;
+        overflow: hidden;
+        transform-origin: 50% bottom;
+
+        &-inner {
+            position: absolute;
+            top: 0;
+            left: 0;
+            display: block;
+            width: 200%;
+            height: 15px;
+            transform: scale(0.5);
+            transform-origin: top left;
+        }
+    }
+}
+
+@keyframes Spin {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}

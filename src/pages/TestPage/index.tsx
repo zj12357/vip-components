@@ -1,5 +1,5 @@
 import React, { FC, useRef } from 'react';
-import { Input, Form } from '@/components/vip-ui';
+import { Input, Form, Loading } from '@/components/vip-ui';
 import { useForm } from '@/components/vip-ui/Form';
 
 type TestPageProps = {};
@@ -77,6 +77,8 @@ const TestPage: FC<TestPageProps> = (props) => {
                     <button type="submit">提交</button>
                 </div>
             </Form>
+
+            <Loading></Loading>
         </div>
     );
 };
