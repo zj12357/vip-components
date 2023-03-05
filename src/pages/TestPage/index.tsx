@@ -1,4 +1,4 @@
-import React, { FC, useEffect } from 'react';
+import React, { FC, useRef } from 'react';
 import { Input, Form } from '@/components/vip-ui';
 import { useForm } from '@/components/vip-ui/Form';
 
@@ -6,10 +6,11 @@ type TestPageProps = {};
 
 const TestPage: FC<TestPageProps> = (props) => {
     const [form] = useForm();
+    const childRef = useRef(null);
 
     const onSubmit = (values: any, result: any) => {
         console.log('----submit Successfully', values, result);
-        console.log(form.setFieldValue('name', 8888), form);
+        console.log(childRef.current);
     };
 
     return (
@@ -37,6 +38,7 @@ const TestPage: FC<TestPageProps> = (props) => {
                         placeholder="Please input username"
                         clearable
                         border="none"
+                        ref={childRef}
                     />
                 </Form.Item>
                 <Form.Item

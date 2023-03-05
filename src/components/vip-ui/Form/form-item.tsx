@@ -14,7 +14,6 @@ import { ValidateStatus } from '@/enums/validatorEnum';
 import { FormInternalComponentType } from '@/enums/formEnum';
 import {
     IFieldError,
-    FieldItem,
     FieldValue,
     IFormItemContext,
     IFormItemInnerProps,
@@ -104,9 +103,11 @@ class FormItemInner extends PureComponent<
         const { field } = this.props;
         const { setFieldValue } = this.context.form;
         setFieldValue(field, value);
+        // 触发trigger事件，进行校验
         this.validateField();
     }
 
+    // 子元素触发trigger事件
     innerTriggerFunction = (_: any, value: any, ...args: any) => {
         this.setFieldData(value);
         const { children, trigger } = this.props;
@@ -115,6 +116,7 @@ class FormItemInner extends PureComponent<
         }
     };
 
+    // 子元素触发trigger事件
     innerTriggerFunctionWithValueFirst = (value: any, ...args: any) => {
         this.setFieldData(value);
         const { children, trigger } = this.props;
