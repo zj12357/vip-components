@@ -8,7 +8,7 @@ import React, {
     useRef,
     useState,
 } from 'react';
-import { ValidatorError } from '@/types/expand/rules';
+import { ValidatorError } from '@/types/vip-ui/rules';
 import { Validator } from '@/utils/validator';
 import { ValidateStatus } from '@/enums/validatorEnum';
 import { FormInternalComponentType } from '@/enums/formEnum';
@@ -19,7 +19,7 @@ import {
     IFormItemInnerProps,
     FormItemProps,
     FormItemRef,
-} from '@/types/expand/form';
+} from '@/types/vip-ui/form';
 
 import { FormItemContext } from './form-item-context';
 

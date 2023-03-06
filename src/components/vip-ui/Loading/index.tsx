@@ -1,5 +1,5 @@
 import React, { useRef, forwardRef, useImperativeHandle, Ref } from 'react';
-import { LoadingProps, LoadingRef } from '@/types/expand/loading';
+import { LoadingProps, LoadingRef } from '@/types/vip-ui/loading';
 import classNames from 'classnames';
 import './index.scoped.scss';
 

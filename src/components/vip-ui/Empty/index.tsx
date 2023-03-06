@@ -1,5 +1,5 @@
 import React, { FC, forwardRef, useRef, useImperativeHandle, Ref } from 'react';
-import { EmptyProps, EmptyRef } from '@/types/expand/empty';
+import { EmptyProps, EmptyRef } from '@/types/vip-ui/empty';
 import classNames from 'classnames';
 import empty from '@/assets/images/icon/empty.svg';
 

@@ -6,7 +6,7 @@ import React, {
     useEffect,
 } from 'react';
 import { componentWrapper } from '@/utils/componentType';
-import { FormProps, FormRef, InternalFormInstance } from '@/types/expand/form';
+import { FormProps, FormRef, InternalFormInstance } from '@/types/vip-ui/form';
 import { FormItemContext } from './form-item-context';
 import useForm from './useForm';
 import Item from './form-item';

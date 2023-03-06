@@ -1,5 +1,5 @@
 import type { AxiosResponse } from 'axios';
-import type { Result } from '@/types/expand/axios';
+import type { Result } from '@/types/util/axios';
 
 export const errorData = (res: AxiosResponse<Result<any>>) => {
     return {

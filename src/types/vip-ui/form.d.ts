@@ -1,5 +1,5 @@
 import { ReactNode } from 'react';
-import { IRules } from '@/types/expand/rules';
+import { IRules } from '@/types/vip-ui/rules';
 import { FormInternalComponentType } from '@/enums/expand/form';
 
 export type FieldValue = any;

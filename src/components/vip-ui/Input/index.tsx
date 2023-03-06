@@ -1,6 +1,6 @@
 import React, { forwardRef, Ref, useImperativeHandle, useRef } from 'react';
 import { componentWrapper } from '@/utils/componentType';
-import { InputProps, InputRef } from '@/types/expand/input';
+import { InputProps, InputRef } from '@/types/vip-ui/input';
 import { useInputLogic } from './hooks';
 
 const Input = forwardRef((props: InputProps, ref: Ref<InputRef>): any => {

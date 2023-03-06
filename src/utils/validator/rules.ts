@@ -3,7 +3,7 @@ import {
     ICustomValidatorFunc,
     IRules,
     ValidatorError,
-} from '@/types/expand/rules';
+} from '@/types/vip-ui/rules';
 
 export class BaseValidator {
     value: any;

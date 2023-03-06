@@ -1,7 +1,7 @@
 import React, { useState, ReactNode, useEffect, useRef } from 'react';
 import { nextTick, isAndroid } from '@/utils/tools';
 import classNames from 'classnames';
-import { BasicInputProps } from '@/types/expand/input';
+import { BasicInputProps } from '@/types/vip-ui/input';
 
 export type InputEleType = HTMLInputElement | HTMLTextAreaElement;
 

@@ -2,7 +2,7 @@
  * axios 数据处理类
  */
 import type { AxiosRequestConfig, AxiosResponse } from 'axios';
-import type { RequestOptions, Result } from '@/types/expand/axios';
+import type { RequestOptions, Result } from '@/types/util/axios';
 
 export interface CreateAxiosOptions extends AxiosRequestConfig {
     requestOptions?: RequestOptions;

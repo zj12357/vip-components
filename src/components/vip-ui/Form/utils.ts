@@ -1,4 +1,4 @@
-import { IRules, ValidatorError } from '@/types/expand/rules';
+import { IRules, ValidatorError } from '@/types/vip-ui/rules';
 
 //是否必填
 export const isFieldRequired = (rules: IRules[] = []) => {

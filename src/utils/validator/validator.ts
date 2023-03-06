@@ -1,6 +1,6 @@
 import { isArray } from '../is';
 import { CustomValidator, BaseValidator } from './rules';
-import { IFieldValue, IRules, ValidatorError } from '@/types/expand/rules';
+import { IFieldValue, IRules, ValidatorError } from '@/types/vip-ui/rules';
 
 export class Validator {
     rules: Record<string, IRules[]>;
@@ -18,7 +18,7 @@ export class Validator {
     }
 
     // 一条rule执行
-    getSingleValidateGroup(value: IFieldValue, rule: IRules, field: string) {
+    getSingleValidateGroup(value: IFieldValue, rule: IRules) {
         const validPromises: Promise<any>[] = [];
         const validatorGroup: any = this.createValidatorGroup(value, rule);
 
@@ -96,14 +96,12 @@ export class Validator {
         if (this.rules) {
             Object.keys(this.rules).forEach((key) => {
                 let spPromiseGroup: Promise<any>[] = [];
-
                 if (isArray(this.rules[key])) {
                     for (let i = 0; i < this.rules[key].length; i++) {
                         const rule = this.rules[key][i];
                         const curPromises = this.getSingleValidateGroup(
                             value[key],
                             rule,
-                            key,
                         );
                         spPromiseGroup = [...spPromiseGroup, ...curPromises];
                     }

@@ -4,7 +4,7 @@ import {
     IFieldError,
     FieldItem,
     IFormInstance,
-} from '@/types/expand/form';
+} from '@/types/vip-ui/form';
 
 const defaultFunc: any = () => {};
 

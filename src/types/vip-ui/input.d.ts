@@ -74,13 +74,10 @@ export interface BasicInputProps<T = HTMLInputElement> {
         | React.ReactNode
         | ((focusing: boolean, inputValue: string) => React.ReactNode);
     /**
-     * 在聚焦之前blur掉，即切换不同input时会重新弹起键盘，常用于input type切换时重新加载键盘，安卓上有效
+     * 在聚焦之前blur
      */
     blurBeforeFocus?: boolean;
-    /**
-     * 是否有清除按钮
-     */
-    clearable?: boolean;
+
     /**
      * 输入框前置内容，在输入框内部，也可自定义
      */

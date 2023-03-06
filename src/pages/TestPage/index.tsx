@@ -36,7 +36,6 @@ const TestPage: FC<TestPageProps> = (props) => {
                 >
                     <Input
                         placeholder="请输入姓名"
-                        clearable
                         border="none"
                         ref={childRef}
                     />
@@ -64,7 +63,7 @@ const TestPage: FC<TestPageProps> = (props) => {
                         },
                     ]}
                 >
-                    <Input placeholder="请输入年龄" clearable border="none" />
+                    <Input placeholder="请输入年龄" border="none" />
                 </Form.Item>
 
                 <div>

@@ -7,7 +7,7 @@ import type {
 import axios from 'axios';
 import { cloneDeep, isFunction } from 'lodash';
 import type { CreateAxiosOptions } from './axiosConfig';
-import type { RequestOptions, Result } from '@/types/expand/axios';
+import type { RequestOptions, Result } from '@/types/util/axios';
 
 /**
  * @description: axios 模块

@@ -4,7 +4,7 @@ import type {
     StorageConfig,
     StorageType,
     StorageValue,
-} from '@/types/expand/storage';
+} from '@/types/util/storage';
 import { CRYPTO_STORAGE_KEY } from '@/common/constants';
 import { cryptoDecrypt, cryptoEncrypt } from '@/utils/tools';
 
