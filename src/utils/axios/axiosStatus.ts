@@ -1,4 +1,4 @@
-import type { ErrorMessageMode } from '@/types/util/axios';
+import type { ErrorMessageMode } from '@/types/utils/axios';
 import { createErrorModal, createErrorMsg } from '@/hooks/useMessage';
 
 export function checkStatus(
